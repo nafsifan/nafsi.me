@@ -5,10 +5,25 @@ import type { Conversation } from '@grammyjs/conversations'
 import { InlineKeyboard } from 'grammy'
 import { escapeHtml, LINE, MOMENT_LIMITS, parseTagsInput, saveTelegramImageToR2, TELEGRAM_HTML_OPTIONS } from '@/telegram/shared'
 
-const STEP_TIMEOUT_MS = 10 * 60 * 1000
+const STEP_TIMEOUT_MS = 5 * 60 * 1000 // 5分钟
 
-async function waitStep(conversation: Conversation<BotContext, BotContext>) {
-	return conversation.wait({ maxMilliseconds: STEP_TIMEOUT_MS })
+async function waitStep(
+	conversation: Conversation<BotContext, BotContext>,
+	ctx: BotContext,
+	lastInteractionTime: { value: number }
+): Promise<BotContext> {
+	const step = await conversation.wait()
+
+	const now = await conversation.now()
+	const elapsed = now - lastInteractionTime.value
+
+	if (elapsed > STEP_TIMEOUT_MS) {
+		await ctx.reply('⏱ 会话已超时（5分钟无操作），请重新开始。')
+		await conversation.halt()
+	}
+
+	lastInteractionTime.value = now
+	return step
 }
 
 async function clearKeyboard(ctx: BotContext) {
@@ -24,22 +39,11 @@ export async function editMomentConversation(
 	ctx: BotContext,
 	moment: Moment,
 ) {
+	const lastInteractionTime = { value: await conversation.now() }
 	const currentContent = moment.content.trim() || '(空)'
 	const currentContentPreview = currentContent.length > 120 ? `${currentContent.slice(0, 120)}...` : currentContent
 	const currentImageCount = moment.images?.length ?? 0
 	const currentTagsText = moment.tags?.length ? moment.tags.join('、') : '无'
-
-	let lastInteractionAt = Date.now()
-
-	const ensureNotTimedOut = async (): Promise<boolean> => {
-		const now = Date.now()
-		if (now - lastInteractionAt > STEP_TIMEOUT_MS) {
-			await ctx.reply('⏱ 会话已超时，请重新开始。')
-			return false
-		}
-		lastInteractionAt = now
-		return true
-	}
 
 	await ctx.reply(
 		[
@@ -59,10 +63,7 @@ export async function editMomentConversation(
 
 	const updateData: UpdateMomentInput = {}
 	while (true) {
-		const step = await waitStep(conversation)
-		if (!await ensureNotTimedOut()) {
-			return
-		}
+		const step = await waitStep(conversation, ctx, lastInteractionTime)
 		const action = step.callbackQuery?.data
 		const text = step.message?.text?.trim()
 
@@ -129,10 +130,7 @@ export async function editMomentConversation(
 	let shouldRemoveImages = false
 
 	while (newImages.length < MOMENT_LIMITS.MAX_IMAGES) {
-		const step = await waitStep(conversation)
-		if (!await ensureNotTimedOut()) {
-			return
-		}
+		const step = await waitStep(conversation, ctx, lastInteractionTime)
 		const action = step.callbackQuery?.data
 		const text = step.message?.text?.trim()
 
@@ -222,10 +220,7 @@ export async function editMomentConversation(
 	)
 
 	while (true) {
-		const step = await waitStep(conversation)
-		if (!await ensureNotTimedOut()) {
-			return
-		}
+		const step = await waitStep(conversation, ctx, lastInteractionTime)
 		const action = step.callbackQuery?.data
 		const text = step.message?.text?.trim()
 
@@ -320,10 +315,7 @@ export async function editMomentConversation(
 	)
 
 	while (true) {
-		const confirmation = await waitStep(conversation)
-		if (!await ensureNotTimedOut()) {
-			return
-		}
+		const confirmation = await waitStep(conversation, ctx, lastInteractionTime)
 		const action = confirmation.callbackQuery?.data
 
 		if (!action) {

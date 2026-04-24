@@ -4,10 +4,25 @@ import type { Conversation } from '@grammyjs/conversations'
 import { InlineKeyboard } from 'grammy'
 import { escapeHtml, LINE, MOMENT_LIMITS, parseTagsInput, saveTelegramImageToR2, TELEGRAM_HTML_OPTIONS } from '@/telegram/shared'
 
-const STEP_TIMEOUT_MS = 10 * 60 * 1000
+const STEP_TIMEOUT_MS = 5 * 60 * 1000 // 5分钟
 
-async function waitStep(conversation: Conversation<BotContext, BotContext>) {
-	return conversation.wait({ maxMilliseconds: STEP_TIMEOUT_MS })
+async function waitStep(
+	conversation: Conversation<BotContext, BotContext>,
+	ctx: BotContext,
+	lastInteractionTime: { value: number }
+): Promise<BotContext> {
+	const step = await conversation.wait()
+
+	const now = await conversation.now()
+	const elapsed = now - lastInteractionTime.value
+
+	if (elapsed > STEP_TIMEOUT_MS) {
+		await ctx.reply('⏱ 会话已超时（5分钟无操作），请重新开始。')
+		await conversation.halt()
+	}
+
+	lastInteractionTime.value = now
+	return step
 }
 
 async function clearKeyboard(ctx: BotContext) {
@@ -22,18 +37,7 @@ export async function createMomentConversation(
 	conversation: Conversation<BotContext, BotContext>,
 	ctx: BotContext,
 ) {
-	let lastInteractionAt = Date.now()
-
-	const ensureNotTimedOut = async (): Promise<boolean> => {
-		const now = Date.now()
-		if (now - lastInteractionAt > STEP_TIMEOUT_MS) {
-			await ctx.reply('⏱ 会话已超时，请重新开始。')
-			return false
-		}
-		lastInteractionAt = now
-		return true
-	}
-
+	const lastInteractionTime = { value: await conversation.now() }
 	await ctx.reply(
 		[
 			'<b>📝 步骤 1/4 · 内容</b>',
@@ -48,10 +52,8 @@ export async function createMomentConversation(
 
 	let content = ''
 	while (!content) {
-		const step = await waitStep(conversation)
-		if (!await ensureNotTimedOut()) {
-			return
-		}
+		const step = await waitStep(conversation, ctx, lastInteractionTime)
+
 		const action = step.callbackQuery?.data
 		const text = step.message?.text?.trim()
 
@@ -102,10 +104,7 @@ export async function createMomentConversation(
 	)
 
 	while (images.length < MOMENT_LIMITS.MAX_IMAGES) {
-		const step = await waitStep(conversation)
-		if (!await ensureNotTimedOut()) {
-			return
-		}
+		const step = await waitStep(conversation, ctx, lastInteractionTime)
 		const action = step.callbackQuery?.data
 		const text = step.message?.text?.trim()
 
@@ -170,10 +169,7 @@ export async function createMomentConversation(
 
 	let tags: string[] = []
 	while (true) {
-		const step = await waitStep(conversation)
-		if (!await ensureNotTimedOut()) {
-			return
-		}
+		const step = await waitStep(conversation, ctx, lastInteractionTime)
 		const action = step.callbackQuery?.data
 		const text = step.message?.text?.trim()
 
@@ -241,10 +237,7 @@ export async function createMomentConversation(
 	)
 
 	while (true) {
-		const confirmation = await waitStep(conversation)
-		if (!await ensureNotTimedOut()) {
-			return
-		}
+		const confirmation = await waitStep(conversation, ctx, lastInteractionTime)
 		const action = confirmation.callbackQuery?.data
 
 		if (!action) {
