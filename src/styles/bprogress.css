@@ -1,0 +1,168 @@
+:root {
+    --bprogress-color: #29d;
+    --bprogress-height: 3px;
+    --bprogress-spinner-size: 18px;
+    --bprogress-spinner-animation-duration: 400ms;
+    --bprogress-spinner-border-size: 2px;
+    --bprogress-box-shadow: 0 0 10px var(--bprogress-color), 0 0 5px var(--bprogress-color);
+    --bprogress-z-index: 99999;
+    --bprogress-spinner-top: 15px;
+    --bprogress-spinner-bottom: auto;
+    --bprogress-spinner-right: 15px;
+    --bprogress-spinner-left: auto;
+}
+
+.bprogress {
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: var(--bprogress-z-index);
+
+    .bar {
+        background: -webkit-gradient(linear,left top,right top,from(#1890ff),color-stop(#13c2c2),color-stop(#52c41a),color-stop(#fa8c16),color-stop(#fa541c),color-stop(#f5222d),to(#1890ff));
+        background: -webkit-linear-gradient(left,#1890ff,#13c2c2,#52c41a,#fa8c16,#fa541c,#f5222d,#1890ff);
+        background: linear-gradient(to right,#1890ff,#13c2c2,#52c41a,#fa8c16,#fa541c,#f5222d,#1890ff);
+        
+        -webkit-animation: 2s linear infinite ins;
+        animation: 2s linear infinite ins;
+        
+        -webkit-transition: opacity 0.2s ease-in-out;
+        transition: opacity 0.2s ease-in-out;
+        
+        -webkit-transform-origin: left;
+        transform-origin: left;
+        
+        background-size: 500%;
+        
+        position: fixed;
+        z-index: var(--bprogress-z-index);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--bprogress-height);
+    }
+
+    .peg {
+        display: block;
+        position: absolute;
+        right: 0;
+        width: 100px;
+        height: 100%;
+        box-shadow: var(--bprogress-box-shadow);
+        opacity: 1.0;
+        transform: rotate(3deg) translate(0px, -4px);
+    }
+
+    .spinner {
+        display: block;
+        position: fixed;
+        z-index: var(--bprogress-z-index);
+        top: var(--bprogress-spinner-top);
+        bottom: var(--bprogress-spinner-bottom);
+        right: var(--bprogress-spinner-right);
+        left: var(--bprogress-spinner-left);
+    }
+
+    .spinner-icon {
+        width: var(--bprogress-spinner-size);
+        height: var(--bprogress-spinner-size);
+        box-sizing: border-box;
+        border: solid var(--bprogress-spinner-border-size) transparent;
+        border-top-color: var(--bprogress-color);
+        border-left-color: var(--bprogress-color);
+        border-radius: 50%;
+        -webkit-animation: bprogress-spinner var(--bprogress-spinner-animation-duration) linear infinite;
+        animation: bprogress-spinner var(--bprogress-spinner-animation-duration) linear infinite;
+    }
+
+    .indeterminate {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--bprogress-height);
+        overflow: hidden;
+
+        .inc,
+        .dec {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            background-color: var(--bprogress-color);
+        }
+
+        .inc {
+            animation: bprogress-indeterminate-increase 2s infinite;
+        }
+
+        .dec {
+            animation: bprogress-indeterminate-decrease 2s 0.5s infinite;
+        }
+    }
+}
+
+.bprogress-custom-parent {
+    overflow: hidden;
+    position: relative;
+
+    .bprogress .spinner,
+    .bprogress .bar {
+        position: absolute;
+    }
+}
+
+@-webkit-keyframes ins {
+    0% { background-position: 0% 0 } 
+    to { background-position: 125% 0 }
+}
+
+@keyframes ins {
+    0% { background-position: 0% 0 } 
+    to { background-position: 125% 0 }
+}
+
+@-webkit-keyframes bprogress-spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes bprogress-spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes bprogress-indeterminate-increase {
+    from {
+        left: -5%;
+        width: 5%;
+    }
+
+    to {
+        left: 130%;
+        width: 100%;
+    }
+}
+
+@keyframes bprogress-indeterminate-decrease {
+    from {
+        left: -80%;
+        width: 80%;
+    }
+
+    to {
+        left: 110%;
+        width: 10%;
+    }
+}

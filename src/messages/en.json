@@ -1,0 +1,62 @@
+{
+	"navigation": {
+		"posts": "Posts",
+		"moments": "Moments",
+		"friends": "Friends",
+		"about": "About"
+	},
+	"calendar": {
+		"totalCount": "{count} contributions in the last year",
+		"noContributions": "No contributions found :(",
+		"tooltip": "{count} activities on {date}"
+	},
+	"aria label": {
+		"backToTop": "Back to top",
+		"navMenu": "Navigation menu",
+		"navItem": "Go to {label}",
+		"navToggleOpen": "Open navigation menu",
+		"navToggleClose": "Close navigation menu",
+		"footerRss": "Open RSS feed",
+		"languageSwitchButton": "Switch language (current: {current})",
+		"themeToggle": "Toggle theme"
+	},
+	"home": {
+		"title": "Hi, I'm Nafsi 👋",
+		"description": "I'm striving to be a great front-end developer...",
+		"avatarAlt": "Nafsi's avatar",
+		"Tech Stack": "Tech Stack",
+		"Get in Touch": "Get in Touch",
+		"Github Contributions": "Github Contributions"
+	},
+	"posts": {
+		"title": "📋 Posts",
+		"meta": {
+			"title": "Posts",
+			"description": "Sharing and documenting, hoping to create value someday."
+		}
+	},
+	"moments": {
+		"title": "📸 Moments",
+		"meta": {
+			"title": "Moments",
+			"description": "Sharing random thoughts and everyday ramblings."
+		},
+		"list": {
+			"loading": "Loading...",
+			"retry": "Reload moments",
+			"image alt": "Moment image",
+			"errors": {
+				"unauthorized": "You don't have permission to load more moments.",
+				"requestFailed": "Failed to load more moments...",
+				"unknown": "Something went wrong. Please try again."
+			}
+		}
+	},
+	"friends": {
+		"title": "🧸 Friends",
+		"meta": {
+			"title": "Friends",
+			"description": "Friends on the internet."
+		}
+	}
+}

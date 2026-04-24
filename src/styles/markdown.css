@@ -1,0 +1,248 @@
+.markdown {
+    @apply text-sm wrap-break-word font-medium text-(--text-secondary);
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply mt-8 mb-3 font-bold relative scroll-mt-20 text-(--text-primary) tracking-tight leading-snug;
+
+        &:first-child {
+            @apply mt-0;
+        }
+
+        a.anchor {
+            @apply relative block w-full cursor-pointer text-inherit no-underline;
+
+            &::after {
+                @apply absolute top-0 bottom-0 w-6 -left-4 content-[''];
+            }
+
+            &::before {
+                @apply absolute font-bold opacity-0 transition-opacity duration-300 cursor-pointer -left-4 text-(--text-tertiary) content-['#'];
+            }
+
+            &:hover {
+                @apply text-inherit no-underline;
+            }
+        }
+
+        &:hover a.anchor::before {
+            @apply opacity-50;
+        }
+    }
+
+    h1,
+    h2 {
+        @apply text-lg sm:text-xl;
+    }
+
+    h3,
+    h4 {
+        @apply text-sm sm:text-base;
+    }
+
+    hr {
+        @apply my-8 h-px border-0 bg-linear-to-r from-transparent via-(--border-subtle) to-transparent;
+    }
+
+    p,
+    li {
+        @apply my-4 leading-7;
+    }
+
+    ul:not(.contains-task-list) {
+        @apply my-4 pl-5 space-y-1;
+
+        li:not(.task-list-item) {
+            @apply relative pl-1;
+
+            &::before {
+                @apply absolute -left-4 top-2.5 size-1.5 rounded-full bg-(--text-tertiary) content-[''];
+            }
+        }
+
+        ul:not(.contains-task-list) {
+            @apply my-1 pl-4;
+
+            li:not(.task-list-item)::before {
+                @apply bg-transparent border border-(--text-tertiary);
+            }
+
+            ul li:not(.task-list-item)::before {
+                @apply bg-(--text-tertiary) rounded-none;
+            }
+        }
+    }
+
+    .task-list-item {
+        @apply list-none;
+
+        input[type="checkbox"] {
+            @apply mr-2 accent-(--accent);
+        }
+    }
+
+    ol {
+        @apply my-4 pl-5 space-y-1 list-decimal marker:text-(--text-tertiary) marker:font-medium;
+
+        li {
+            @apply relative pl-1;
+        }
+
+        ol {
+            @apply my-1 pl-4 list-decimal;
+        }
+    }
+
+    :not(h1, h2, h3, h4, h5, h6, ul, sup)>a {
+        @apply font-medium text-(--accent) transition cursor-pointer duration-300 underline underline-offset-4 decoration-2 decoration-(--accent-soft) hover:text-(--accent-strong) hover:decoration-(--accent-strong);
+    }
+
+    /* :not(pre)>code {
+        @apply inline-flex items-center bg-(--surface-muted) mx-0.5 px-1 rounded-md whitespace-pre transition-colors duration-300 text-[0.85em] font-medium text-(--text-primary) border border-(--border-subtle)/50;
+
+        a {
+            @apply no-underline;
+        }
+    } */
+
+    kbd {
+        @apply inline-flex items-center bg-(--surface-muted) border border-(--border-subtle) mx-1 px-2 py-0.5 rounded text-xs font-mono font-semibold text-(--text-primary) shadow-sm border-b-2;
+    }
+
+    pre {
+        @apply bg-(--bg-secondary) border border-(--border-subtle) rounded-xl overflow-auto my-6 p-4 text-(--text-secondary) text-[13px] leading-5;
+
+        &::-webkit-scrollbar-track,
+        &::-webkit-scrollbar-corner {
+            @apply rounded-full bg-(--border-subtle);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            @apply rounded-full bg-(--accent);
+        }
+    }
+
+    blockquote {
+        @apply relative my-6 rounded-r-lg border-l-3 border-l-(--accent) pl-5 pr-3 py-3 text-(--text-secondary) bg-(--surface-muted);
+    }
+
+    video {
+        @apply my-6 block rounded-lg shadow-sm mx-auto;
+    }
+
+    table {
+        @apply w-full my-6 border border-(--border-subtle) rounded-lg overflow-hidden bg-(--surface-card) border-collapse shadow-sm;
+    }
+
+    thead {
+        @apply bg-(--surface-muted) text-(--text-primary) uppercase text-sm tracking-wider;
+    }
+
+    th,
+    td {
+        @apply px-4 py-3 border-b border-(--border-subtle) text-left align-top text-sm;
+    }
+
+    th {
+        @apply font-semibold;
+    }
+
+    tbody tr:nth-child(even) {
+        @apply bg-(--surface-muted)/30;
+    }
+
+    tbody tr:hover {
+        @apply transition-colors duration-200 bg-(--surface-overlay)/40;
+    }
+
+    tbody tr:last-of-type td {
+        @apply border-b-0;
+    }
+
+    figure[data-rehype-pretty-code-figure] {
+        @apply my-6 relative;
+
+        [data-rehype-pretty-code-title] {
+            @apply px-3 py-2 text-[13px] font-semibold text-(--text-primary) bg-(--surface-muted) border border-(--border-subtle) rounded-t-lg border-b m-0;
+        }
+
+        &:has([data-rehype-pretty-code-title]) pre {
+            @apply rounded-t-none border-t-0 mt-0;
+        }
+
+        pre {
+            @apply rounded-lg overflow-x-auto m-0 px-0;
+        }
+
+        code {
+            @apply text-[13px] font-mono grid;
+
+            span[data-line] {
+                @apply px-4 py-0.5 border-l-2 border-l-transparent;
+
+                &.highlighted {
+                    @apply bg-(--accent-soft)/50 border-l-(--accent-strong) border-l-2;
+                }
+
+                &.diff.add {
+                    @apply bg-green-50/50 border-l-green-500/40 dark:bg-green-900/20 border-l-2;
+
+                    &::before {
+                        @apply text-green-600 dark:text-green-400 content-['+'];
+                    }
+                }
+
+                &.diff.remove {
+                    @apply bg-red-50/50 border-l-red-500/40 dark:bg-red-900/20 border-l-2;
+
+                    &::before {
+                        @apply text-red-600 dark:text-red-400 content-['-'];
+                    }
+                }
+            }
+        }
+
+        button {
+            @apply hover:opacity-100! absolute right-3 top-3 flex cursor-pointer select-none items-center justify-center rounded-md bg-(--surface-muted)/90 text-sm font-medium text-(--text-tertiary) opacity-0 shadow outline-0 transition border border-(--border-subtle);
+        
+            svg {
+                @apply m-2 size-5;
+            }
+        
+            .check {
+                @apply opacity-0 transition-opacity;
+            }
+        
+            &.copied {
+                @apply opacity-100! text-(--accent-strong);
+        
+                .check {
+                    @apply opacity-100;
+                }
+            }
+        }
+
+        &:hover {
+            button {
+                @apply opacity-80;
+            }
+        }
+
+        &:has([data-rehype-pretty-code-title]) button {
+            @apply top-12;
+        }
+    }
+
+
+    code span {
+        @apply text-(--shiki-light);
+    }
+}
+
+[data-theme='dark'] .markdown code span {
+    @apply text-(--shiki-dark);
+}

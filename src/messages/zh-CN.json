@@ -1,0 +1,62 @@
+{
+	"navigation": {
+		"posts": "文章",
+		"moments": "碎碎念",
+		"friends": "朋友们",
+		"about": "关于我"
+	},
+	"calendar": {
+		"totalCount": "过去一年共有 {count} 次贡献",
+		"noContributions": "暂无贡献记录 :(",
+		"tooltip": "在 {date} 有 {count} 次活动"
+	},
+	"aria label": {
+		"backToTop": "返回顶部",
+		"navMenu": "导航菜单",
+		"navItem": "跳转到 {label}",
+		"navToggleOpen": "打开导航菜单",
+		"navToggleClose": "关闭导航菜单",
+		"footerRss": "打开 RSS 订阅",
+		"languageSwitchButton": "切换语言（当前：{current}）",
+		"themeToggle": "切换主题"
+	},
+	"home": {
+		"title": "Hi, I'm Nafsi 👋",
+		"description": "努力成为一名优秀的前端开发者...",
+		"avatarAlt": "头像",
+		"Tech Stack": "常用技能",
+		"Get in Touch": "社交媒体",
+		"Github Contributions": "最近的贡献"
+	},
+	"posts": {
+		"title": "📋 文章",
+		"meta": {
+			"title": "文章",
+			"description": "分享和记录，希望有一天可以创造价值。"
+		}
+	},
+	"moments": {
+		"title": "📸 碎碎念",
+		"meta": {
+			"title": "碎碎念",
+			"description": "发表一些奇怪的想法和日常的树洞。"
+		},
+		"list": {
+			"loading": "正在加载...",
+			"retry": "重新加载",
+			"image alt": "碎碎念的图片",
+			"errors": {
+				"unauthorized": "您暂时没有访问授权 :)",
+				"requestFailed": "加载失败...",
+				"unknown": "发生未知错误，请稍后重试 :("
+			}
+		}
+	},
+	"friends": {
+		"title": "🧸 朋友们",
+		"meta": {
+			"title": "朋友们",
+			"description": "在互联网上的朋友。"
+		}
+	}
+}
