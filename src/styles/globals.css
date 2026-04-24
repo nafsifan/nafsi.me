@@ -69,14 +69,49 @@ body {
     text-autospace: normal;
 }
 
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: var(--border-subtle);
+
+    &:hover {
+        background: var(--text-quaternary);
+    }
+}
+
 /* React Activity Calendar styles */
 .react-activity-calendar__scroll-container {
-    /* Switch the calendar to start scrolled to the right (i.e. showing the most recent dates) */
     direction: rtl;
 
-    /* Reverts scroll direction for all children of the scroll container */
     * {
         direction: initial;
+    }
+
+    &::-webkit-scrollbar {
+        height: 4px;
+    }
+
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-corner {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 9999px;
+        background: var(--border-subtle);
+
+        &:hover {
+            background: var(--text-quaternary);
+        }
     }
 }
 

@@ -116,13 +116,21 @@
     pre {
         @apply bg-(--bg-secondary) border border-(--border-subtle) rounded-xl overflow-auto my-6 p-4 text-(--text-secondary) text-[13px] leading-5;
 
+        &::-webkit-scrollbar {
+            @apply h-1.5 w-1.5;
+        }
+
         &::-webkit-scrollbar-track,
         &::-webkit-scrollbar-corner {
-            @apply rounded-full bg-(--border-subtle);
+            @apply bg-transparent;
         }
 
         &::-webkit-scrollbar-thumb {
-            @apply rounded-full bg-(--accent);
+            @apply rounded-full bg-(--text-quaternary);
+
+            &:hover {
+                @apply bg-(--text-tertiary);
+            }
         }
     }
 
