@@ -43,6 +43,8 @@ export default function Home() {
 					<IconBadge variant="tech" icon="i-devicon-nuxt" text="Nuxt" />
 					<IconBadge variant="tech" icon="i-devicon-vitejs" text="Vite" />
 					<IconBadge variant="tech" icon="i-devicon-nodejs" text="Node" />
+					<IconBadge variant="tech" icon="i-devicon-bun" text="Bun" />
+					<IconBadge variant="tech" icon="i-devicon-docker" text="Docker" />
 				</div>
 			</div>
 			<div className="space-y-4">
