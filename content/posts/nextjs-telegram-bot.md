@@ -67,7 +67,7 @@ TELEGRAM_ALLOWED_CHAT_ID=123456789
 
 #### 初始化
 
-```javascript title="src/telegram/bot.ts"
+```ts title="src/telegram/bot.ts"
 import { Bot } from "grammy";
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -79,7 +79,7 @@ const bot = new Bot(token);
 
 #### 绑定指令
 
-```javascript title="src/telegram/bot.ts"
+```ts title="src/telegram/bot.ts"
 import { Bot } from "grammy";
 
 const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -158,11 +158,11 @@ export async function GET() {
 2. 新建窗口，在终端运行 `ngrok http 3000` 记录输出的域名地址
 3. 调用 Telegram 官方**setWebhook**接口，把临时域名与我们在 Next.js 中编写的 Webhook Route 绑定，同时附带 **secret_token**
 
-   ```bash
-   curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebhook"
+```bash
+    curl -sS -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setWebhook"
         -H "Content-Type: application/json"
         -d "{"url": "https://<子域>.ngrok.app/api/telegram/webhook", "secret_token": "${TELEGRAM_WEBHOOK_SECRET_KEY}"}"
-   ```
+```
 
 现在通过 Telegram Bot 输入指令 `/ping`，就可以看到 **"Telegram Bot 连通性检测成功"** 的成功返回信息了。
 
