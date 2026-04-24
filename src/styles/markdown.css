@@ -175,7 +175,69 @@
         @apply my-6 relative;
 
         [data-rehype-pretty-code-title] {
-            @apply px-3 py-2 text-[13px] font-semibold text-(--text-primary) bg-(--surface-muted) border border-(--border-subtle) rounded-t-lg border-b m-0;
+            @apply px-3 py-2 text-[13px] font-semibold text-(--text-primary) bg-(--surface-muted) border border-(--border-subtle) rounded-t-lg border-b m-0 flex items-center gap-1.5;
+
+            &::before {
+                @apply inline-block size-5! shrink-0;
+                content: '';
+            }
+
+            &[data-language='ts']::before,
+            &[data-language='typescript']::before {
+                @apply i-material-icon-theme-typescript;
+            }
+
+            &[data-language='js']::before,
+            &[data-language='jsx']::before,
+            &[data-language='javascript']::before {
+                @apply i-material-icon-theme-javascript;
+            }
+
+            &[data-language='tsx']::before {
+                @apply i-material-icon-theme-react;
+            }
+
+            &[data-language='vue']::before {
+                @apply i-material-icon-theme-vue;
+            }
+
+            &[data-language='css']::before {
+                @apply i-material-icon-theme-css;
+            }
+
+            &[data-language='html']::before {
+                @apply i-material-icon-theme-html;
+            }
+
+            &[data-language='sh']::before,
+            &[data-language='bash']::before,
+            &[data-language='shell']::before,
+            &[data-language='zsh']::before {
+                @apply i-material-icon-theme-powershell;
+            }
+
+            &[data-language='json']::before {
+                @apply i-material-icon-theme-json;
+            }
+
+            &[data-language='yaml']::before,
+            &[data-language='yml']::before {
+                @apply i-material-icon-theme-yaml;
+            }
+
+            &[data-language='md']::before,
+            &[data-language='markdown']::before {
+                @apply i-material-icon-theme-folder-markdown;
+            }
+
+            &[data-language='dockerfile']::before,
+            &[data-language='docker']::before {
+                @apply i-material-icon-theme-docker;
+            }
+
+            &[data-language='nginx']::before {
+                @apply i-material-icon-theme-nginx;
+            }
         }
 
         &:has([data-rehype-pretty-code-title]) pre {
