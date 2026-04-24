@@ -280,7 +280,7 @@
             @apply hover:opacity-100! absolute right-3 top-3 flex cursor-pointer select-none items-center justify-center rounded-md bg-(--surface-muted)/90 text-sm font-medium text-(--text-tertiary) opacity-0 shadow outline-0 transition border border-(--border-subtle);
         
             svg {
-                @apply m-2 size-5;
+                @apply m-1.5 size-4;
             }
         
             .check {
