@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "velite --watch & next dev --turbopack",
+		"dev": "velite & next dev --turbopack",
 		"build": "pnpm prisma generate && velite build && next build --turbopack",
 		"start": "next start",
 		"lint": "eslint",
@@ -41,9 +41,10 @@
 		"zod": "^4.1.13"
 	},
 	"devDependencies": {
-		"@egoist/tailwindcss-icons": "^1.9.0",
+		"@egoist/tailwindcss-icons": "^1.9.2",
 		"@eslint/eslintrc": "^3.3.3",
 		"@iconify-json/devicon": "^1.2.51",
+		"@iconify-json/material-icon-theme": "^1.2.60",
 		"@iconify-json/mingcute": "^1.2.5",
 		"@iconify-json/simple-icons": "^1.2.61",
 		"@prisma/client-runtime-utils": "^7.0.1",
