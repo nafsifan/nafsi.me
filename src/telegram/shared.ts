@@ -28,13 +28,26 @@ export const MOMENT_LIMITS = {
 } as const
 
 export const ERROR_MESSAGES = {
-	UNAUTHORIZED: 'Access denied. Only authorised users can use this bot.',
-	GENERAL_ERROR: 'Something went wrong. Please try again later.',
-	NOT_FOUND: 'Moment with id "{id}" was not found.',
-	INVALID_ID: 'Moment id is required.',
-	EMPTY_CONTENT: 'Content is required. Creation cancelled.',
-	CONTENT_TOO_LONG: `Content is too long. Maximum length is ${MOMENT_LIMITS.MAX_CONTENT_LENGTH} characters.`,
+	UNAUTHORIZED: '🚫 暂无权限。',
+	GENERAL_ERROR: '❌ 操作失败，请稍后重试。',
+	NOT_FOUND: '❌ 未找到该碎碎念。',
+	INVALID_ID: '❌ 缺少碎碎念 ID。',
+	EMPTY_CONTENT: '❌ 内容不能为空，操作已取消。',
+	CONTENT_TOO_LONG: `❌ 内容超出限制，最多 ${MOMENT_LIMITS.MAX_CONTENT_LENGTH} 个字符。`,
 } as const
+
+export const TELEGRAM_HTML_OPTIONS = {
+	parse_mode: 'HTML' as const,
+}
+
+export function escapeHtml(text: string): string {
+	return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+export const b = (s: string) => `<b>${s}</b>`
+export const i = (s: string) => `<i>${s}</i>`
+export const code = (s: string) => `<code>${s}</code>`
+export const LINE = '─────────────────'
 
 const ALLOWED_IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.webp']
 
@@ -151,47 +164,54 @@ export function formatTelegramDateTime(value: Date | string, format: string = DE
 // Moment formatting
 export function formatMomentDetails(moment: Moment): string {
 	const formatDateTime = (value: Date | string) => formatTelegramDateTime(value)
-	const hasTags = Boolean(moment.tags && moment.tags.length > 0)
+	const tagsText = moment.tags?.length ? moment.tags.join('、') : '无'
+	const imageCount = moment.images?.length ?? 0
+	const content = escapeHtml(moment.content.trim() || '(空)')
+
 	const lines = [
-		'Moment Overview',
-		'---------------',
-		`ID: ${moment.id}`,
-		'',
-		'Content:',
-		moment.content.trim() || '(empty)',
-		'',
-		`Tags: ${hasTags ? moment.tags!.join(', ') : 'None'}`,
-		`Created: ${formatDateTime(moment.createdAt)}`,
-		`Updated: ${formatDateTime(moment.updatedAt)}`,
+		b('📄 碎碎念详情'),
+		LINE,
+		`🆔 ID：${code(moment.id)}`,
+		`📝 内容：${content}`,
+		`🖼 图片：${imageCount} 张`,
+		`🏷 标签：${tagsText}`,
+		`🕐 创建：${formatDateTime(moment.createdAt)}`,
+		`🔄 更新：${formatDateTime(moment.updatedAt)}`,
 	]
 
 	return lines.join('\n')
 }
 
 export function formatDeleteConfirmation(moment: Moment): string {
-	const truncatedContent = moment.content.substring(0, 100)
-	const hasMoreContent = moment.content.length > 100
+	const normalizedContent = moment.content.trim() || '(空)'
+	const truncatedContent = normalizedContent.substring(0, 80)
+	const hasMoreContent = normalizedContent.length > 80
 	const contentLine = hasMoreContent ? `${truncatedContent}...` : truncatedContent
 	const imagesCount = moment.images?.length ?? 0
-	const tagsLine = moment.tags?.length ? moment.tags.join(', ') : 'None'
+	const tagsLine = moment.tags?.length ? moment.tags.join('、') : '无'
 
 	return [
-		'Confirm delete',
-		'',
-		`ID: ${moment.id}`,
-		`Content: ${contentLine}`,
-		`Images: ${imagesCount}`,
-		`Tags: ${tagsLine}`,
-		'',
-		'This action cannot be undone.',
+		b('⚠️ 确认删除'),
+		LINE,
+		`📝 内容：${i(escapeHtml(contentLine))}`,
+		`🖼 图片：${imagesCount} 张`,
+		`🏷 标签：${tagsLine}`,
+		LINE,
+		b('删除后不可恢复'),
 	].join('\n')
 }
 
 // Keyboards
 export function createDeleteConfirmKeyboard(momentId: string): InlineKeyboard {
 	return new InlineKeyboard()
-		.text('Confirm delete', `confirm_delete_${momentId}`)
-		.text('Cancel', 'cancel_delete')
+		.text('✅ 确认删除', `confirm_delete_${momentId}`)
+		.text('取消', 'cancel_delete')
+}
+
+export function createDeleteStartKeyboard(momentId: string): InlineKeyboard {
+	return new InlineKeyboard()
+		.text('确认删除', `delete_${momentId}`)
+		.text('取消', 'cancel_delete')
 }
 
 // Moment helpers

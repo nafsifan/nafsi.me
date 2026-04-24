@@ -1,5 +1,17 @@
 import type { BotContext } from '@/telegram/shared'
-import { createDeleteConfirmKeyboard, ERROR_MESSAGES, fetchMomentOrReplyNotFound, formatDeleteConfirmation, formatTelegramDateTime } from '@/telegram/shared'
+import { createDeleteConfirmKeyboard, createDeleteStartKeyboard, ERROR_MESSAGES, fetchMomentOrReplyNotFound, formatDeleteConfirmation, TELEGRAM_HTML_OPTIONS } from '@/telegram/shared'
+
+export async function promptDeleteMoment(ctx: BotContext, momentId: string) {
+	const moment = await fetchMomentOrReplyNotFound(ctx, momentId)
+	if (!moment) {
+		return
+	}
+
+	await ctx.reply(formatDeleteConfirmation(moment), {
+		...TELEGRAM_HTML_OPTIONS,
+		reply_markup: createDeleteStartKeyboard(moment.id),
+	})
+}
 
 export async function handleDeleteCommand(ctx: BotContext) {
 	const momentId = ctx.match?.toString().trim()
@@ -8,21 +20,14 @@ export async function handleDeleteCommand(ctx: BotContext) {
 		await ctx.reply(
 			[
 				ERROR_MESSAGES.INVALID_ID,
-				'Usage: /delete <id>',
-				'Example: /delete 0856dbcdabf9',
+				'用法：/delete <id>',
+				'示例：/delete 0856dbcdabf9',
 			].join('\n'),
 		)
 		return
 	}
 
-	const moment = await fetchMomentOrReplyNotFound(ctx, momentId)
-	if (!moment) {
-		return
-	}
-
-	await ctx.reply(formatDeleteConfirmation(moment), {
-		reply_markup: createDeleteConfirmKeyboard(moment.id),
-	})
+	await promptDeleteMoment(ctx, momentId)
 }
 
 export async function handleDeleteCallback(ctx: BotContext) {
@@ -41,33 +46,35 @@ export async function handleDeleteCallback(ctx: BotContext) {
 					.catch(() => undefined)
 			}
 		}
-		await ctx.reply('Delete cancelled.')
+		await ctx.reply('已取消当前操作。')
 		return
 	}
 
 	if (callbackData.startsWith('confirm_delete_')) {
-		if (ctx.callbackQuery) {
-			await ctx.answerCallbackQuery()
+		try {
+			if (ctx.callbackQuery) {
+				await ctx.answerCallbackQuery()
+			}
+
+			const momentId = callbackData.replace('confirm_delete_', '')
+			const { MomentService } = await import('@/lib/moments.service')
+
+			await MomentService.delete(momentId)
+
+			if (ctx.callbackQuery?.message) {
+				await ctx
+					.editMessageReplyMarkup(undefined)
+					.catch(() => undefined)
+			}
+
+			await ctx.reply(
+				'碎碎念已删除成功！',
+			)
 		}
-
-		const momentId = callbackData.replace('confirm_delete_', '')
-		const { MomentService } = await import('@/lib/moments.service')
-
-		await MomentService.delete(momentId)
-
-		if (ctx.callbackQuery?.message) {
-			await ctx
-				.editMessageReplyMarkup(undefined)
-				.catch(() => undefined)
+		catch (error) {
+			console.error('[Telegram Delete] delete moment failed:', error)
+			await ctx.reply('删除失败，请稍后重试。')
 		}
-
-		await ctx.reply(
-			[
-				'Moment deleted.',
-				`ID: ${momentId}`,
-				`Deleted at: ${formatTelegramDateTime(new Date())}`,
-			].join('\n'),
-		)
 		return
 	}
 
@@ -77,13 +84,10 @@ export async function handleDeleteCallback(ctx: BotContext) {
 		}
 
 		const momentId = callbackData.replace('delete_', '')
-		const moment = await fetchMomentOrReplyNotFound(ctx, momentId)
-		if (!moment) {
-			return
-		}
-
-		await ctx.reply(formatDeleteConfirmation(moment), {
-			reply_markup: createDeleteConfirmKeyboard(moment.id),
-		})
+		await ctx
+			.editMessageReplyMarkup({
+				reply_markup: createDeleteConfirmKeyboard(momentId),
+			})
+			.catch(() => undefined)
 	}
 }
