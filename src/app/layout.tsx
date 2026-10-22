@@ -5,6 +5,7 @@ import { JetBrains_Mono, Noto_Sans, Noto_Sans_SC } from 'next/font/google'
 import BackToTopButton from '@/components/BackToTopButton'
 import Footer from '@/components/layouts/Footer'
 import Header from '@/components/layouts/Header'
+import SpotlightGlow from '@/components/SpotlightGlow'
 import UmamiAnalytics from '@/components/UmamiAnalytics'
 import { siteConfig } from '@/lib/site'
 import { cn } from '@/lib/utils'
@@ -87,14 +88,17 @@ export default async function RootLayout({
 	const messages = await getMessages()
 
 	return (
-		<html lang={locale} suppressHydrationWarning data-scroll-behavior="smooth">
+		<html lang={locale} data-theme="dark" className="dark" suppressHydrationWarning data-scroll-behavior="smooth">
 			<body className={cn(
 				notoSans.variable,
 				notoSansSC.variable,
 				cascadiaCode.variable,
-				'flex min-h-screen w-full flex-col antialiased',
+				'relative flex min-h-screen w-full flex-col antialiased',
 			)}
 			>
+				<div className="bg-noise" aria-hidden="true" />
+				<div className="ambient-glow" aria-hidden="true" />
+				<SpotlightGlow />
 				<Providers>
 					<NextIntlClientProvider locale={locale} messages={messages}>
 						<Header />
