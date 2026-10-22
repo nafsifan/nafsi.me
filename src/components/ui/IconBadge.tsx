@@ -13,10 +13,10 @@ interface IconBadgeProps {
 const baseClasses = 'flex items-center justify-center gap-1 text-sm transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--focus-ring) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary)'
 
 const variantStyles: Record<IconBadgeVariant, string> = {
-	tech: 'rounded-md border border-(--border-subtle)/40 bg-(--surface-muted) px-2.5 py-1 font-semibold select-none text-(--text-secondary) transition-all duration-200 hover:border-(--border-subtle) hover:text-(--text-primary) hover:shadow-sm',
-	social: 'border-b-2 border-dashed border-b-(--accent) font-semibold text-(--accent) hover:border-b-(--accent-strong) hover:text-(--accent-strong)',
+	tech: 'interactive-badge rounded-md border border-(--border-subtle)/40 bg-(--surface-muted) px-2.5 py-1 font-semibold select-none text-(--text-secondary) hover:border-(--border-subtle) hover:text-(--text-primary) hover:shadow-xs',
+	social: 'interactive-badge border-b-2 border-dashed border-b-(--accent) font-semibold text-(--accent) hover:border-b-(--accent-strong) hover:text-(--accent-strong)',
 	moment: 'font-semibold text-(--accent-strong) hover:bg-(--accent-soft)/25 px-2 py-0.5 rounded',
-	tag: 'inline-flex cursor-default items-center justify-start gap-0 font-medium text-(--accent) transition-colors duration-200 hover:text-(--accent-strong)',
+	tag: 'inline-flex cursor-default items-center rounded-md border border-(--border-subtle)/40 bg-(--surface-muted)/40 px-2 py-0.5 text-xs font-medium text-(--text-tertiary) transition-colors duration-200 hover:border-(--accent-soft) hover:text-(--accent-strong)',
 	category: 'inline-flex cursor-default items-center justify-start font-medium text-sm text-(--text-tertiary)',
 }
 

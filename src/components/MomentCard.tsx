@@ -19,47 +19,51 @@ export default function MomentCard({ item }: MomentCardProps) {
 	}, [formatter, item.createdAt])
 
 	return (
-		<div className="rounded-xl border border-(--border-subtle)/30 bg-linear-to-br from-(--surface-card) to-(--surface-muted)/50 p-4 shadow-md transition-all duration-300 hover:shadow-lg">
+		<div className="matte-card rounded-2xl p-4.5 sm:p-5">
 			<div className="flex items-center justify-between">
-				<div className="flex items-center gap-2">
+				<div className="flex items-center gap-2.5">
 					<Image
 						src="/avatar.jpeg"
 						alt="Nafsi"
 						width={24}
 						height={24}
-						className="rounded-full bg-(--surface-muted)"
+						className="size-6 rounded-full border border-(--border-subtle)/35 shadow-2xs"
 					/>
-					<h2 className="font-bold text-(--text-primary)">
+					<h2 className="text-xs font-semibold text-(--text-primary)">
 						Nafsi
 					</h2>
 				</div>
-				<time className="flex items-center text-sm text-(--text-tertiary)">
+				<time className="flex items-center font-mono text-[11px] text-(--text-quaternary)">
 					{relativeTimeLabel}
 				</time>
 			</div>
-			<div className="my-3 h-px w-full bg-(--border-subtle)/50" aria-hidden="true" />
 
-			<div className="pb-4">
-				<p className="overflow-hidden wrap-break-word whitespace-pre-wrap text-(--text-secondary)">
+			<div className="mt-3">
+				<p className="overflow-hidden text-[14px] leading-relaxed wrap-break-word whitespace-pre-wrap text-(--text-primary)/90">
 					{item.content}
 				</p>
 
 				{item.images && item.images.length > 0 && (
-					<GalleryImage
-						images={item.images}
-						alt={t('image alt')}
-					/>
+					<div className="mt-3">
+						<GalleryImage
+							images={item.images}
+							alt={t('image alt')}
+						/>
+					</div>
 				)}
 			</div>
-			<div className="mt-2 flex flex-wrap items-center gap-3">
-				{item.tags && item.tags.length > 0 && item.tags.map(tag => (
-					<IconBadge
-						key={item.id + tag}
-						text={`#${tag}`}
-						variant="tag"
-					/>
-				))}
-			</div>
+
+			{item.tags && item.tags.length > 0 && (
+				<div className="mt-3 flex flex-wrap items-center gap-2">
+					{item.tags.map(tag => (
+						<IconBadge
+							key={item.id + tag}
+							text={`#${tag}`}
+							variant="tag"
+						/>
+					))}
+				</div>
+			)}
 		</div>
 	)
 }
