@@ -8,7 +8,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<ThemeProvider
 			enableSystem={false}
-			defaultTheme="dark"
+			forcedTheme="dark"
 			disableTransitionOnChange
 		>
 			<ProgressProvider

@@ -1,7 +1,6 @@
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import LanguageSwitch from '@/components/LanguageSwitch'
-import ToggleThemeButton from '@/components/ToggleThemeButton'
 
 export default function Footer() {
 	const t = useTranslations('aria label')
@@ -23,7 +22,6 @@ export default function Footer() {
 						<i className="i-mingcute-rss-2-fill text-lg" aria-hidden="true" />
 					</Link>
 					<LanguageSwitch />
-					<ToggleThemeButton />
 				</div>
 			</div>
 		</footer>
