@@ -8,14 +8,14 @@ export default function Home() {
 
 	return (
 		<section className="space-y-8">
-			<div className="flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:gap-6">
+			<div className="animate-fade-in-up flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:gap-6">
 				<Image
 					src="/avatar.jpeg"
 					alt={t('avatarAlt')}
 					width={416}
 					height={416}
 					priority
-					className="size-32 rounded-full border-2 border-(--border-subtle) bg-(--surface-card)"
+					className="size-32 rounded-full border-2 border-(--border-subtle) bg-(--surface-card) transition-transform duration-300 hover:scale-105"
 				/>
 				<div className="space-y-1 text-left">
 					<h1 className="text-4xl font-bold text-(--text-primary)">
@@ -27,7 +27,7 @@ export default function Home() {
 				</div>
 			</div>
 
-			<div className="space-y-4">
+			<div className="animate-fade-in-up animation-delay-100 space-y-4">
 				<h2 className="text-2xl font-semibold text-(--text-primary)">
 					{t('Tech Stack')}
 				</h2>
@@ -47,7 +47,7 @@ export default function Home() {
 					<IconBadge variant="tech" icon="i-devicon-docker" text="Docker" />
 				</div>
 			</div>
-			<div className="space-y-4">
+			<div className="animate-fade-in-up animation-delay-200 space-y-4">
 				<h2 className="text-2xl font-semibold text-(--text-primary)">
 					{t('Get in Touch')}
 				</h2>
@@ -78,7 +78,7 @@ export default function Home() {
 					/>
 				</div>
 			</div>
-			<div className="space-y-4">
+			<div className="animate-fade-in-up animation-delay-300 space-y-4">
 				<h2 className="text-2xl font-semibold text-(--text-primary)">
 					{t('Github Contributions')}
 				</h2>

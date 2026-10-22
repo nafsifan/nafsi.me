@@ -106,7 +106,7 @@ export default async function PostPage({ params }: PostPageProps) {
 	}
 
 	return (
-		<>
+		<div className="animate-fade-in-up">
 			<Link href="/posts" className="mb-4 inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-(--text-tertiary) transition-colors duration-200 hover:text-(--text-primary)">
 				<i className="i-mingcute-back-fill text-base" />
 				<span>Back</span>
@@ -142,6 +142,6 @@ export default async function PostPage({ params }: PostPageProps) {
 				/>
 
 			</article>
-		</>
+		</div>
 	)
 }

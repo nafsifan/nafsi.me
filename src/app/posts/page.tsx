@@ -3,7 +3,6 @@ import dayjs from 'dayjs'
 import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import React from 'react'
 import { posts } from '#site/content'
 import PageTitle from '@/components/layouts/pageTitle'
 import { siteConfig } from '@/lib/site'
@@ -48,7 +47,7 @@ export default function Posts() {
 	const years = Object.keys(groupedPosts).sort((a, b) => Number.parseInt(b) - Number.parseInt(a))
 
 	return (
-		<>
+		<div className="animate-fade-in-up">
 			<PageTitle title={t('title')} />
 
 			{years.map(year => (
@@ -63,14 +62,14 @@ export default function Posts() {
 
 					<div className="relative -mt-4 space-y-4">
 						{groupedPosts[year].map(post => (
-							<div key={post.slug} className="flex items-baseline justify-between text-base text-(--text-secondary)">
+							<div key={post.slug} className="interactive-row group flex items-baseline justify-between py-1 text-base text-(--text-secondary)">
 								<Link
 									href={`/posts/${post.slug}`}
-									className="cursor-pointer font-semibold text-(--text-primary) transition-colors duration-300 hover:text-(--accent-strong)"
+									className="cursor-pointer font-semibold text-(--text-primary) transition-colors duration-200 group-hover:text-(--accent-strong)"
 								>
 									{post.title}
 								</Link>
-								<time className="ml-4 shrink-0 text-(--text-tertiary)">
+								<time className="ml-4 shrink-0 font-mono text-xs text-(--text-quaternary) tabular-nums">
 									{ dayjs(String(post.date)).format('YYYY/MM/DD') }
 								</time>
 							</div>
@@ -79,6 +78,6 @@ export default function Posts() {
 				</div>
 			))}
 
-		</>
+		</div>
 	)
 }
