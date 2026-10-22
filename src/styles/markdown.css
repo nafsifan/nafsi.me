@@ -114,28 +114,32 @@
     }
 
     pre {
-        @apply bg-(--bg-secondary) border border-(--border-subtle) rounded-xl overflow-auto my-6 p-4 text-(--text-secondary) text-[13px] leading-5;
+        @apply bg-(--bg-secondary) border border-(--border-subtle)/60 rounded-xl overflow-auto my-6 p-4 text-(--text-secondary) text-[13px] leading-5 shadow-xs;
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, var(--border-subtle) 70%, transparent) transparent;
 
         &::-webkit-scrollbar {
-            @apply h-1.5 w-1.5;
+            height: 4px;
+            width: 4px;
         }
 
         &::-webkit-scrollbar-track,
         &::-webkit-scrollbar-corner {
-            @apply bg-transparent;
+            background: transparent;
         }
 
         &::-webkit-scrollbar-thumb {
-            @apply rounded-full bg-(--text-quaternary);
+            border-radius: 9999px;
+            background: color-mix(in srgb, var(--border-subtle) 70%, transparent);
 
             &:hover {
-                @apply bg-(--text-tertiary);
+                background: var(--text-quaternary);
             }
         }
     }
 
     blockquote {
-        @apply relative my-6 rounded-r-lg border-l-3 border-l-(--accent) pl-5 pr-3 py-3 text-(--text-secondary) bg-(--surface-muted);
+        @apply relative my-6 rounded-r-xl border-l-2 border-l-(--accent)/80 pl-4 pr-3 py-2.5 text-(--text-secondary) bg-(--surface-muted)/50;
     }
 
     video {
@@ -143,28 +147,28 @@
     }
 
     table {
-        @apply w-full my-6 border border-(--border-subtle) rounded-lg overflow-hidden bg-(--surface-card) border-collapse shadow-sm;
+        @apply w-full my-6 border border-(--border-subtle)/50 rounded-xl overflow-hidden bg-(--surface-card) border-collapse shadow-xs;
     }
 
     thead {
-        @apply bg-(--surface-muted) text-(--text-primary) uppercase text-sm tracking-wider;
+        @apply bg-(--surface-muted)/70 text-(--text-secondary) uppercase text-xs tracking-wider;
     }
 
     th,
     td {
-        @apply px-4 py-3 border-b border-(--border-subtle) text-left align-top text-sm;
+        @apply px-4 py-3 border-b border-(--border-subtle)/40 text-left align-top text-sm;
     }
 
     th {
-        @apply font-semibold;
+        @apply font-semibold text-(--text-primary);
     }
 
     tbody tr:nth-child(even) {
-        @apply bg-(--surface-muted)/30;
+        @apply bg-(--surface-muted)/20;
     }
 
     tbody tr:hover {
-        @apply transition-colors duration-200 bg-(--surface-overlay)/40;
+        @apply transition-colors duration-200 bg-(--surface-muted)/40;
     }
 
     tbody tr:last-of-type td {
@@ -175,7 +179,7 @@
         @apply my-6 relative;
 
         [data-rehype-pretty-code-title] {
-            @apply px-3 py-2 text-[13px] font-semibold text-(--text-primary) bg-(--surface-muted) border border-(--border-subtle) rounded-t-lg border-b m-0 flex items-center gap-1.5;
+            @apply px-3 py-2 text-[13px] font-semibold text-(--text-secondary) bg-(--surface-muted)/70 border border-(--border-subtle)/60 rounded-t-xl border-b border-b-(--border-subtle)/40 m-0 flex items-center gap-1.5;
 
             &::before {
                 @apply inline-block size-5! shrink-0;
@@ -245,7 +249,28 @@
         }
 
         pre {
-            @apply rounded-lg overflow-x-auto m-0 px-0;
+            @apply rounded-lg overflow-x-auto m-0 px-0 pb-2;
+            scrollbar-width: thin;
+            scrollbar-color: color-mix(in srgb, var(--border-subtle) 70%, transparent) transparent;
+
+            &::-webkit-scrollbar {
+                height: 4px;
+                width: 4px;
+            }
+
+            &::-webkit-scrollbar-track,
+            &::-webkit-scrollbar-corner {
+                background: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: 9999px;
+                background: color-mix(in srgb, var(--border-subtle) 70%, transparent);
+
+                &:hover {
+                    background: var(--text-quaternary);
+                }
+            }
         }
 
         code {
@@ -255,32 +280,32 @@
                 @apply px-4 py-0.5 border-l-2 border-l-transparent;
 
                 &.highlighted {
-                    @apply bg-(--accent-soft)/50 border-l-(--accent-strong) border-l-2;
+                    @apply bg-(--accent-soft)/35 border-l-(--accent) border-l-2;
                 }
 
                 &.diff.add {
-                    @apply bg-green-50/50 border-l-green-500/40 dark:bg-green-900/20 border-l-2;
+                    @apply bg-emerald-950/25 border-l-emerald-500/50 border-l-2;
 
                     &::before {
-                        @apply text-green-600 dark:text-green-400 content-['+'];
+                        @apply text-emerald-400 content-['+'];
                     }
                 }
 
                 &.diff.remove {
-                    @apply bg-red-50/50 border-l-red-500/40 dark:bg-red-900/20 border-l-2;
+                    @apply bg-rose-950/25 border-l-rose-500/50 border-l-2;
 
                     &::before {
-                        @apply text-red-600 dark:text-red-400 content-['-'];
+                        @apply text-rose-400 content-['-'];
                     }
                 }
             }
         }
 
         button {
-            @apply hover:opacity-100! absolute right-3 top-3 flex cursor-pointer select-none items-center justify-center rounded-md bg-(--surface-muted)/90 text-sm font-medium text-(--text-tertiary) opacity-0 shadow outline-0 transition border border-(--border-subtle);
+            @apply hover:opacity-100! absolute right-3 top-3 flex cursor-pointer select-none items-center justify-center rounded-md bg-(--surface-muted) text-sm font-medium text-(--text-tertiary) opacity-0 shadow-sm outline-0 transition-all border border-(--border-subtle)/30 hover:text-(--text-primary) active:scale-95;
         
             svg {
-                @apply m-1.5 size-4;
+                @apply m-1.5 size-3.5;
             }
         
             .check {
@@ -298,7 +323,7 @@
 
         &:hover {
             button {
-                @apply opacity-80;
+                @apply opacity-90;
             }
         }
 
@@ -309,7 +334,7 @@
 
 
     code span {
-        @apply text-(--shiki-light);
+        @apply text-(--shiki-dark);
     }
 }
 

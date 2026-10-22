@@ -70,7 +70,7 @@ export default defineConfig({
 				rehypePrettyCode,
 				{
 					theme: {
-						dark: 'plastic',
+						dark: 'dracula-soft',
 						light: 'github-light',
 					},
 					keepBackground: false,
