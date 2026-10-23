@@ -12,6 +12,7 @@
 	},
 	"aria label": {
 		"backToTop": "Back to top",
+		"navHome": "Go to home",
 		"navMenu": "Navigation menu",
 		"navItem": "Go to {label}",
 		"navToggleOpen": "Open navigation menu",

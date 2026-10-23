@@ -1,6 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import Navigation from './Navigation'
@@ -28,7 +29,18 @@ export default function Header() {
 				<div className="m-auto flex max-w-xl flex-col justify-center py-3 sm:flex-row sm:items-center">
 					<div className="flex grow items-center justify-between">
 						<div className="flex items-center select-none">
-							<h1 className="text-lg font-bold text-(--text-primary)">@Nafsi</h1>
+							<Link
+								href="/"
+								onClick={closeMenu}
+								aria-label={t('navHome')}
+								className={cn(
+									'rounded-sm focus-visible:ring-2 focus-visible:ring-(--focus-ring) focus-visible:ring-offset-2 focus-visible:ring-offset-(--bg-primary) focus-visible:outline-none',
+								)}
+							>
+								<h1 className="text-lg font-bold text-(--text-primary) transition-opacity hover:opacity-80">
+									@Nafsi
+								</h1>
+							</Link>
 						</div>
 
 						<button

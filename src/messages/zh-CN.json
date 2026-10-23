@@ -12,6 +12,7 @@
 	},
 	"aria label": {
 		"backToTop": "返回顶部",
+		"navHome": "回到首页",
 		"navMenu": "导航菜单",
 		"navItem": "跳转到 {label}",
 		"navToggleOpen": "打开导航菜单",
