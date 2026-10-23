@@ -199,30 +199,6 @@ body {
     transition-duration: var(--duration-active);
 }
 
-.interactive-row {
-    will-change: transform;
-    transform: translateZ(0);
-    transition: transform var(--duration-hover) var(--ease-spring);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    .interactive-row:hover {
-        transform: translateX(2px);
-    }
-}
-
-.interactive-row:active {
-    transform: scale(0.99);
-    transition-duration: var(--duration-active);
-}
-
-/* Tactile Depression - 统一实体微按压触感反馈 */
-button:active:not(:disabled),
-[role="button"]:active {
-    transform: scale(0.98);
-    transition-duration: var(--duration-active);
-}
-
 /* Smooth motion & stagger keyframes */
 @keyframes fadeInUp {
     from {

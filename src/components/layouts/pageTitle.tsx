@@ -15,8 +15,8 @@ export default function PageTitle({
 }: PageTitleProps) {
 	return (
 		<div className={cn('space-y-3', className)}>
-			<div className="flex items-center gap-2.5">
-				{emoji && <Emoji name={emoji} className="size-7 sm:size-8" />}
+			<div className="flex items-center gap-2">
+				{emoji && <Emoji name={emoji} className="size-6 sm:size-7" />}
 				<h2 className="text-2xl font-bold text-(--text-primary) sm:text-3xl">
 					{title}
 				</h2>

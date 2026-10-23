@@ -75,9 +75,9 @@ export default async function Posts() {
 						</span>
 					</div>
 
-					<div className="relative -mt-4 space-y-4">
+					<div className="relative -mt-4 space-y-2">
 						{groupedPosts[year].map(post => (
-							<div key={post.slug} className="interactive-row group flex items-baseline justify-between py-1 text-base text-(--text-secondary)">
+							<div key={post.slug} className="group flex items-baseline justify-between py-1 text-base text-(--text-secondary)">
 								<Link
 									href={`/posts/${post.slug}`}
 									className="cursor-pointer font-semibold text-(--text-primary) transition-colors duration-200 group-hover:text-(--accent-strong)"

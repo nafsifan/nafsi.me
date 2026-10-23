@@ -15,7 +15,7 @@ export default function Emoji({ name, alt = '', className }: EmojiProps) {
 			aria-label={alt || name}
 			className={cn(
 				'inline-flex shrink-0 items-center justify-center align-middle select-none',
-				className || 'size-[1.15em]',
+				className || 'size-[1em]',
 			)}
 		>
 			<img

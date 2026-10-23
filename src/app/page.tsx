@@ -19,9 +19,9 @@ export default function Home() {
 					className="size-32 rounded-full border-2 border-(--border-subtle) bg-(--surface-card) transition-transform duration-300 hover:scale-105"
 				/>
 				<div className="space-y-1 text-left">
-					<h1 className="flex items-center gap-2.5 text-4xl font-bold text-(--text-primary)">
+					<h1 className="flex items-center gap-2 text-4xl font-bold text-(--text-primary)">
 						<span>{t('title')}</span>
-						<Emoji name="wave" alt="👋" className="size-9 sm:size-10" />
+						<Emoji name="wave" alt="👋" className="size-7 sm:size-8" />
 					</h1>
 					<p className="text-xl leading-relaxed text-(--text-secondary)">
 						{t('description')}
