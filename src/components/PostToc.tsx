@@ -91,16 +91,16 @@ export function PostToc({ toc }: PostTocProps) {
 							}
 						}}
 						className={cn(
-							'relative block truncate py-1 text-xs transition-colors duration-200',
-							depth === 0 ? 'pl-3.5' : 'pl-6 text-[11.5px]',
+							'relative block truncate py-1 text-xs leading-5 transition-colors duration-200',
+							depth === 0 ? 'pl-3.5' : 'pl-6',
 							isActive
 								? 'font-medium text-(--accent-strong)'
-								: 'text-(--text-quaternary) hover:text-(--text-primary)',
+								: 'text-(--text-tertiary) hover:text-(--text-primary)',
 						)}
 					>
 						{isActive && (
 							<span
-								className="absolute top-1 -left-[1px] h-4 w-0.5 rounded-full bg-(--accent-strong) shadow-xs transition-all duration-200"
+								className="absolute top-1.5 -left-[1px] h-4 w-0.5 rounded-full bg-(--accent-strong) shadow-xs transition-all duration-200"
 								aria-hidden="true"
 							/>
 						)}
