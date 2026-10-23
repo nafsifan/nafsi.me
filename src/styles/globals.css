@@ -173,7 +173,7 @@ body {
 
 .matte-card:active,
 .glass-card:active {
-    transform: translateY(0) scale(0.995);
+    transform: translateY(0) scale(0.985);
     transition-duration: var(--duration-active);
 }
 
@@ -195,7 +195,7 @@ body {
 }
 
 .interactive-badge:active {
-    transform: translateY(0) scale(0.96);
+    transform: translateY(0) scale(0.975);
     transition-duration: var(--duration-active);
 }
 
@@ -211,9 +211,17 @@ body {
     }
 }
 
+.interactive-row:active {
+    transform: scale(0.99);
+    transition-duration: var(--duration-active);
+}
 
-
-
+/* Tactile Depression - 统一实体微按压触感反馈 */
+button:active:not(:disabled),
+[role="button"]:active {
+    transform: scale(0.98);
+    transition-duration: var(--duration-active);
+}
 
 /* Smooth motion & stagger keyframes */
 @keyframes fadeInUp {
