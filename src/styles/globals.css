@@ -105,7 +105,7 @@ body {
     z-index: 999;
 }
 
-/* Background Noise Texture */
+/* Background Noise Texture - 细腻微胶片银盐质感，去雾霾感 */
 .bg-noise {
     position: fixed;
     inset: 0;
@@ -113,11 +113,12 @@ body {
     height: 100vh;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.04;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.022;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Ambient glow & backdrop */
+/* Ambient glow & backdrop - 纯粹内敛的单色主题蓝顶部光晕 */
 .ambient-glow {
     position: fixed;
     top: -80px;
@@ -128,15 +129,23 @@ body {
     height: 440px;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.65;
-    background: radial-gradient(ellipse at 50% 0%, rgba(77, 150, 255, 0.24) 0%, rgba(168, 85, 247, 0.12) 40%, transparent 75%);
+    opacity: 0.55;
+    background: radial-gradient(ellipse at 50% 0%, rgba(77, 150, 255, 0.18) 0%, rgba(77, 150, 255, 0.04) 50%, transparent 80%);
     filter: blur(75px);
 }
 
-/* Mouse follow spotlight */
+@media (max-width: 640px) {
+    .ambient-glow {
+        top: -40px;
+        height: 260px;
+        opacity: 0.35;
+        filter: blur(50px);
+    }
+}
+
+/* Mouse follow spotlight - 纯粹内敛的单色主题蓝漫反射 */
 .spotlight-glow {
-    background: radial-gradient(circle, rgba(77, 150, 255, 0.12) 0%, rgba(168, 85, 247, 0.05) 45%, transparent 70%);
-    filter: blur(50px);
+    background: radial-gradient(circle, rgba(77, 150, 255, 0.09) 0%, rgba(77, 150, 255, 0.02) 42%, transparent 70%);
 }
 
 /* Card Container - 沉稳内敛的微质感实体卡片 */
@@ -153,11 +162,13 @@ body {
                 box-shadow var(--duration-hover) var(--ease-spring);
 }
 
-.matte-card:hover,
-.glass-card:hover {
-    transform: translateY(-2px);
-    border-color: color-mix(in srgb, var(--border-subtle) 65%, transparent);
-    box-shadow: 0 4px 14px -1px rgba(0, 0, 0, 0.45), 0 18px 32px -4px rgba(0, 0, 0, 0.38);
+@media (hover: hover) and (pointer: fine) {
+    .matte-card:hover,
+    .glass-card:hover {
+        transform: translateY(-2px);
+        border-color: color-mix(in srgb, var(--border-subtle) 65%, transparent);
+        box-shadow: 0 4px 14px -1px rgba(0, 0, 0, 0.45), 0 18px 32px -4px rgba(0, 0, 0, 0.38);
+    }
 }
 
 .matte-card:active,
@@ -177,8 +188,10 @@ body {
                 color var(--duration-hover) var(--ease-spring);
 }
 
-.interactive-badge:hover {
-    transform: translateY(-1.5px);
+@media (hover: hover) and (pointer: fine) {
+    .interactive-badge:hover {
+        transform: translateY(-1.5px);
+    }
 }
 
 .interactive-badge:active {
@@ -192,9 +205,15 @@ body {
     transition: transform var(--duration-hover) var(--ease-spring);
 }
 
-.interactive-row:hover {
-    transform: translateX(4px);
+@media (hover: hover) and (pointer: fine) {
+    .interactive-row:hover {
+        transform: translateX(2px);
+    }
 }
+
+
+
+
 
 /* Smooth motion & stagger keyframes */
 @keyframes fadeInUp {

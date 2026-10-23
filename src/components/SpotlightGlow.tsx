@@ -1,68 +1,67 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { motion, useMotionValue, useSpring } from 'motion/react'
+import { useEffect, useState } from 'react'
+
+const SPRING_CONFIG = {
+	damping: 28,
+	stiffness: 180,
+	mass: 0.6,
+}
 
 export default function SpotlightGlow() {
-	const spotRef = useRef<HTMLDivElement>(null)
+	const [isSupported, setIsSupported] = useState(false)
+
+	const mouseX = useMotionValue(-1000)
+	const mouseY = useMotionValue(-1000)
+
+	// 使用真实的物理弹簧阻尼，具备真实的物理质量与惯性缓冲
+	const springX = useSpring(mouseX, SPRING_CONFIG)
+	const springY = useSpring(mouseY, SPRING_CONFIG)
+
+	// 控制进出场与离开窗口时的自然渐隐渐现
+	const opacity = useMotionValue(0)
+	const springOpacity = useSpring(opacity, { damping: 20, stiffness: 200 })
 
 	useEffect(() => {
-		// 仅在支持高精度鼠标指针的设备上启用
+		// 仅在支持高精度鼠标指针的 PC 设备上激活
 		if (!window.matchMedia('(pointer: fine)').matches) {
 			return
 		}
-
-		let frameId: number | null = null
-		let targetX = -1000
-		let targetY = -1000
-		let currentX = -1000
-		let currentY = -1000
-		let isVisible = false
+		setIsSupported(true)
 
 		const handlePointerMove = (e: PointerEvent) => {
-			targetX = e.clientX
-			targetY = e.clientY
-			if (!isVisible && spotRef.current) {
-				isVisible = true
-				spotRef.current.style.opacity = '1'
-			}
+			mouseX.set(e.clientX - 325)
+			mouseY.set(e.clientY - 325)
+			opacity.set(1)
 		}
 
 		const handlePointerLeave = () => {
-			if (spotRef.current) {
-				isVisible = false
-				spotRef.current.style.opacity = '0'
-			}
-		}
-
-		// 使用阻尼插值让光晕移动更加柔和细腻
-		const render = () => {
-			currentX += (targetX - currentX) * 0.15
-			currentY += (targetY - currentY) * 0.15
-
-			if (spotRef.current) {
-				spotRef.current.style.transform = `translate3d(${currentX - 300}px, ${currentY - 300}px, 0)`
-			}
-			frameId = requestAnimationFrame(render)
+			opacity.set(0)
 		}
 
 		window.addEventListener('pointermove', handlePointerMove, { passive: true })
 		document.documentElement.addEventListener('pointerleave', handlePointerLeave)
-		frameId = requestAnimationFrame(render)
 
 		return () => {
 			window.removeEventListener('pointermove', handlePointerMove)
 			document.documentElement.removeEventListener('pointerleave', handlePointerLeave)
-			if (frameId) {
-				cancelAnimationFrame(frameId)
-			}
 		}
-	}, [])
+	}, [mouseX, mouseY, opacity])
+
+	if (!isSupported) {
+		return null
+	}
 
 	return (
-		<div
-			ref={spotRef}
+		<motion.div
 			aria-hidden="true"
-			className="spotlight-glow pointer-events-none fixed top-0 left-0 z-0 size-[600px] rounded-full opacity-0 transition-opacity duration-500 will-change-transform"
+			className="spotlight-glow pointer-events-none fixed top-0 left-0 z-0 size-[650px] rounded-full"
+			style={{
+				x: springX,
+				y: springY,
+				opacity: springOpacity,
+			}}
 		/>
 	)
 }
