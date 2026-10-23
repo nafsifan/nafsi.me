@@ -60,7 +60,10 @@ export default async function Posts() {
 
 	return (
 		<div className="animate-fade-in-up">
-			<PageTitle title={t('title')} />
+			<PageTitle
+				title={t('title')}
+				emoji="clipboard"
+			/>
 
 			{years.map(year => (
 				<div key={year}>

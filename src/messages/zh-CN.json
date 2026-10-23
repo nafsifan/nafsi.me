@@ -22,7 +22,7 @@
 		"themeToggle": "切换主题"
 	},
 	"home": {
-		"title": "Hi, I'm Nafsi 👋",
+		"title": "Hi, I'm Nafsi",
 		"description": "努力成为一名优秀的前端开发者...",
 		"avatarAlt": "头像",
 		"Tech Stack": "常用技能",
@@ -30,14 +30,14 @@
 		"Github Contributions": "最近的贡献"
 	},
 	"posts": {
-		"title": "📋 文章",
+		"title": "文章",
 		"meta": {
 			"title": "文章",
 			"description": "分享和记录，希望有一天可以创造价值。"
 		}
 	},
 	"moments": {
-		"title": "📸 碎碎念",
+		"title": "碎碎念",
 		"meta": {
 			"title": "碎碎念",
 			"description": "发表一些奇怪的想法和日常的树洞。"
@@ -54,7 +54,7 @@
 		}
 	},
 	"friends": {
-		"title": "🧸 朋友们",
+		"title": "朋友们",
 		"meta": {
 			"title": "朋友们",
 			"description": "在互联网上的朋友。"

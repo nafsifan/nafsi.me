@@ -32,7 +32,10 @@ export default function Moments() {
 
 	return (
 		<>
-			<PageTitle title={t('title')} />
+			<PageTitle
+				title={t('title')}
+				emoji="camera"
+			/>
 			<MomentsList />
 		</>
 	)

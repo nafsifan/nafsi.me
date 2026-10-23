@@ -35,7 +35,10 @@ export default function Friends() {
 
 	return (
 		<>
-			<PageTitle title={t('title')} />
+			<PageTitle
+				title={t('title')}
+				emoji="bear"
+			/>
 
 			<div className="mt-8 mb-6 grid-flow-row grid-cols-2 gap-x-5 gap-y-4 sm:grid">
 				{friendsData.links.map(link => (

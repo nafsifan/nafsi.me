@@ -22,7 +22,7 @@
 		"themeToggle": "Toggle theme"
 	},
 	"home": {
-		"title": "Hi, I'm Nafsi 👋",
+		"title": "Hi, I'm Nafsi",
 		"description": "I'm striving to be a great front-end developer...",
 		"avatarAlt": "Nafsi's avatar",
 		"Tech Stack": "Tech Stack",
@@ -30,14 +30,14 @@
 		"Github Contributions": "Github Contributions"
 	},
 	"posts": {
-		"title": "📋 Posts",
+		"title": "Posts",
 		"meta": {
 			"title": "Posts",
 			"description": "Sharing and documenting, hoping to create value someday."
 		}
 	},
 	"moments": {
-		"title": "📸 Moments",
+		"title": "Moments",
 		"meta": {
 			"title": "Moments",
 			"description": "Sharing random thoughts and everyday ramblings."
@@ -54,7 +54,7 @@
 		}
 	},
 	"friends": {
-		"title": "🧸 Friends",
+		"title": "Friends",
 		"meta": {
 			"title": "Friends",
 			"description": "Friends on the internet."
