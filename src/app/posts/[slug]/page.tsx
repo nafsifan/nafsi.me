@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
 import dayjs from 'dayjs'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { posts } from '#site/content'
 import { MDXContent } from '@/components/MDXContent'
+import { PostSummary } from '@/components/PostSummary'
 import { PostToc } from '@/components/PostToc'
 import IconBadge from '@/components/ui/IconBadge'
+import { getUserLocale } from '@/i18n/request'
 import { siteConfig } from '@/lib/site'
 
 interface PostPageProps {
@@ -15,14 +18,17 @@ interface PostPageProps {
 }
 
 export async function generateStaticParams() {
-	return posts.map(post => ({
-		slug: post.slug,
+	return Array.from(new Set(posts.map(post => post.slug))).map(slug => ({
+		slug,
 	}))
 }
 
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
 	const { slug } = await params
-	const post = posts.find(p => p.slug === slug)
+	const locale = await getUserLocale()
+	const post = posts.find(p => p.slug === slug && p.locale === locale)
+		?? posts.find(p => p.slug === slug && p.locale === 'zh-CN')
+		?? posts.find(p => p.slug === slug)
 
 	if (!post) {
 		return {
@@ -34,11 +40,13 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 	const description = post.description ?? siteConfig.description
 	const url = `${siteConfig.url}/posts/${post.slug}`
 	const publishedTime = new Date(post.date).toISOString()
+	const tCategories = await getTranslations('categories')
+	const categoryLabel = tCategories.has(post.category) ? tCategories(post.category) : post.category
 
 	return {
 		title: post.title,
 		description,
-		keywords: post.category,
+		keywords: categoryLabel,
 		alternates: {
 			canonical: `/posts/${post.slug}`,
 		},
@@ -51,7 +59,7 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 			type: 'article',
 			publishedTime,
 			modifiedTime: publishedTime,
-			tags: post.category,
+			tags: categoryLabel,
 			images: [
 				{
 					url: siteConfig.ogImage.url,
@@ -72,11 +80,17 @@ export async function generateMetadata({ params }: PostPageProps): Promise<Metad
 
 export default async function PostPage({ params }: PostPageProps) {
 	const { slug } = await params
-	const post = posts.find(p => p.slug === slug)
+	const locale = await getUserLocale()
+	const post = posts.find(p => p.slug === slug && p.locale === locale)
+		?? posts.find(p => p.slug === slug && p.locale === 'zh-CN')
+		?? posts.find(p => p.slug === slug)
 
 	if (!post) {
 		notFound()
 	}
+
+	const tCategories = await getTranslations('categories')
+	const categoryLabel = tCategories.has(post.category) ? tCategories(post.category) : post.category
 
 	const jsonLd = {
 		'@context': 'https://schema.org',
@@ -101,7 +115,7 @@ export default async function PostPage({ params }: PostPageProps) {
 			'name': siteConfig.author.name,
 			'url': siteConfig.author.url,
 		},
-		'articleSection': post.category,
+		'articleSection': categoryLabel,
 		'keywords': (post.tags ?? []).join(', '),
 	}
 
@@ -124,16 +138,26 @@ export default async function PostPage({ params }: PostPageProps) {
 						<div className="flex flex-wrap items-center gap-2">
 							<IconBadge
 								key={post.category}
-								text={post.category}
+								text={categoryLabel}
 								variant="category"
 							/>
 						</div>
 					</div>
+					<PostSummary
+						summary={post.summary}
+						locale={post.locale as 'zh-CN' | 'en'}
+					/>
 				</section>
 
 				<section className="relative">
 					<MDXContent code={post.content} className="markdown" />
 					<PostToc toc={post.toc} />
+
+					{post.locale === 'en' && (
+						<footer className="mt-12 border-t border-(--border-subtle)/60 pt-6 text-xs text-(--text-quaternary) italic">
+							This article was translated by AI.
+						</footer>
+					)}
 				</section>
 
 				<script

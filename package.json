@@ -8,15 +8,18 @@
 		"start": "next start",
 		"lint": "eslint",
 		"lint:fix": "eslint . --fix",
-		"velite": "velite"
+		"velite": "velite",
+		"ai": "bun scripts/ai.ts"
 	},
 	"dependencies": {
+		"@ai-sdk/anthropic": "^4.0.85",
 		"@aws-sdk/client-s3": "^3.943.0",
 		"@bprogress/next": "^3.2.12",
 		"@grammyjs/conversations": "^2.1.1",
 		"@nafsifan/eslint-config": "^1.2.1",
 		"@prisma/adapter-d1": "^7.0.1",
 		"@prisma/client": "^7.0.1",
+		"ai": "^7.0.148",
 		"dayjs": "^1.11.19",
 		"dotenv": "^17.2.3",
 		"grammy": "^1.38.4",

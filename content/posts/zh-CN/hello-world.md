@@ -3,10 +3,11 @@ title: "Hello, World !"
 slug: "hello-world"
 date: "2025-10-10"
 description: "A concise tour of every Markdown feature this blog understands."
-category: "Guide"
+category: "指南"
 tags: ["markdown", "guide"]
 featured: false
 draft: false
+summary: "这里整理了本站支持的所有 Markdown 排版样式，从基础的图文、列表，到高亮代码块和折叠框都集中过了一遍。以后写新文章要是忘了语法或懒得折腾格式，随时可以把它当成速查手册，直接把现成的样式模板拷走套用。"
 ---
 
 # Hello, World 👋

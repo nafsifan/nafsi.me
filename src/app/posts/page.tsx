@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import dayjs from 'dayjs'
-import { useTranslations } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { posts } from '#site/content'
 import PageTitle from '@/components/layouts/pageTitle'
+import { getUserLocale } from '@/i18n/request'
 import { siteConfig } from '@/lib/site'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -28,10 +28,22 @@ export async function generateMetadata(): Promise<Metadata> {
 	}
 }
 
-export default function Posts() {
-	const t = useTranslations('posts')
+export default async function Posts() {
+	const t = await getTranslations('posts')
+	const locale = await getUserLocale()
 
-	const sortedPosts = posts.sort((a, b) =>
+	const uniquePostsMap = new Map<string, typeof posts[number]>()
+	for (const post of posts) {
+		const existing = uniquePostsMap.get(post.slug)
+		if (!existing) {
+			uniquePostsMap.set(post.slug, post)
+		}
+		else if (post.locale === locale) {
+			uniquePostsMap.set(post.slug, post)
+		}
+	}
+
+	const sortedPosts = Array.from(uniquePostsMap.values()).sort((a, b) =>
 		new Date(b.date).getTime() - new Date(a.date).getTime(),
 	)
 

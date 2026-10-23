@@ -5,6 +5,7 @@ date: "2025-12-15"
 description: "使用 Thumbhash + Sharp 生成图片占位符，解决布局偏移问题，实现图片优化。"
 category: "瞎折腾"
 tags: ["Next.js", "图片优化", "Thumbhash", "Sharp"]
+summary: "网页加载时图片突然弹出来，很容易撑开页面造成恼人的布局跳动。这里记录了我如何借助 Sharp 和超轻量的 Thumbhash 编写自定义 Rehype 插件，在博客构建阶段自动提取图片尺寸并注入模糊占位图，彻底解决累计布局偏移（CLS）的问题。"
 ---
 
 ## 前言

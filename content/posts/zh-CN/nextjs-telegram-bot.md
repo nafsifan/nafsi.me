@@ -5,6 +5,7 @@ date: "2025-11-24"
 description: "Next.js 接入 Telegram Bot 功能的折腾笔记"
 category: "瞎折腾"
 tags: ['moments','telegram-bot', 'grammy' ,'Cloudflare R2','Cloudflare D1']
+summary: "为了能随时随地往博客的动态页面发点碎碎念，我琢磨着直接把 Telegram Bot 接了进来，省去折腾单独管理后台的麻烦。这里先在 Next.js 里用 grammY 跑通一个最简 Demo，顺便把 Webhook 接收与本地调试的完整流程理顺，方便之后随时随地记录灵感。"
 ---
 
 ## 前言

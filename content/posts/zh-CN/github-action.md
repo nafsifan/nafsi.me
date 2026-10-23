@@ -5,6 +5,7 @@ date: "2025-12-03"
 description: "GitHub Actions Runner 在国内服务器上部署实践，包含 Docker 环境配置、Java/Maven 工具链集成,以及 CI/CD 自动化部署"
 category: "笔记"
 tags: ['GitHub Actions', 'Docker', 'CI/CD', 'Self-Hosted Runner', 'Java', 'Maven']
+summary: "最近给团队搭 Java 自动化部署时，实在受够了每次构建都重复下载 JDK 和依赖的龟速网络。索性自己在服务器上用 Docker 跑了个自建 Runner，预装好环境、搞定 Maven 缓存持久化并打通直接部署，完整的配置方案和踩坑细节都记录在这里了。"
 ---
 
 ## 前言

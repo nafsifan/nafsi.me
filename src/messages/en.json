@@ -59,5 +59,10 @@
 			"title": "Friends",
 			"description": "Friends on the internet."
 		}
+	},
+	"categories": {
+		"瞎折腾": "Tinkering",
+		"笔记": "Notes",
+		"指南": "Guide"
 	}
 }
