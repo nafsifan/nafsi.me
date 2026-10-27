@@ -160,10 +160,9 @@ export default async function PostPage({ params }: PostPageProps) {
 					)}
 				</section>
 
-				<script
-					type="application/ld+json"
-					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-				/>
+				<script type="application/ld+json">
+					{JSON.stringify(jsonLd)}
+				</script>
 
 			</article>
 		</div>
