@@ -11,6 +11,26 @@ type ErrorKey = 'unauthorized' | 'requestFailed' | 'unknown'
 
 const LIMIT = 5
 
+function MomentCardSkeleton() {
+	return (
+		<div className="matte-card rounded-2xl p-4.5 sm:p-5" aria-hidden="true">
+			<div className="flex items-center justify-between">
+				<div className="flex items-center gap-2.5">
+					<div className="size-6 rounded-full bg-(--surface-muted) motion-safe:animate-pulse" />
+					<div className="h-3 w-10 rounded-full bg-(--surface-muted) motion-safe:animate-pulse" />
+				</div>
+				<div className="h-3 w-10 rounded-full bg-(--surface-muted) motion-safe:animate-pulse" />
+			</div>
+			<div className="mt-3">
+				<div className="h-5 w-3/4 rounded-full bg-(--surface-muted) motion-safe:animate-pulse" />
+			</div>
+			<div className="mt-3 flex gap-2">
+				<div className="h-5 w-16 rounded-full bg-(--surface-muted) motion-safe:animate-pulse" />
+			</div>
+		</div>
+	)
+}
+
 export default function MomentsList() {
 	const t = useTranslations('moments.list')
 
@@ -42,6 +62,8 @@ export default function MomentsList() {
 		rootMargin: '100px',
 	})
 
+	const isInitialLoading = moments.length === 0 && hasMore && !error
+
 	const getErrorKey = (error: Error | null): ErrorKey => {
 		if (!error)
 			return 'unknown'
@@ -56,10 +78,12 @@ export default function MomentsList() {
 
 	return (
 		<>
-			<div className="mt-8 space-y-6">
-				{moments.map(moment => (
-					<MomentCard key={moment.id} item={moment} />
-				))}
+			<div className="mt-8 space-y-6" aria-busy={isInitialLoading}>
+				{isInitialLoading
+					? Array.from({ length: LIMIT }, (_, index) => <MomentCardSkeleton key={index} />)
+					: moments.map(moment => (
+							<MomentCard key={moment.id} item={moment} />
+						))}
 			</div>
 
 			{error && (
@@ -93,8 +117,8 @@ export default function MomentsList() {
 				>
 					{isLoading && (
 						<>
-							<i className="i-mingcute-loading-fill animate-spin text-lg text-(--accent)" />
-							<span>{t('loading')}</span>
+							<i className={cn('i-mingcute-loading-fill animate-spin text-lg text-(--accent)', moments.length === 0 && 'sr-only')} aria-hidden="true" />
+							<span className={moments.length === 0 ? 'sr-only' : undefined}>{t('loading')}</span>
 						</>
 					)}
 				</div>
